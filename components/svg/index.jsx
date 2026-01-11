@@ -25,9 +25,9 @@ export const LockerSvg = () => {
     );
 }
 
-export const AirplaneSvg = () => {
+export const AirplaneSvg = ({style}) => {
     return (
-        <Svg width="89px" height="89px" viewBox="0 0 64 64" xmlns="http://www.w3.org/2000/svg" aria-hidden="true" role="img" class="iconify iconify--emojione-monotone" preserveAspectRatio="xMidYMid meet" fill="#FFF" stroke="#FFF" color="#FFF">
+        <Svg style={style} width="89px" height="89px" viewBox="0 0 64 64" xmlns="http://www.w3.org/2000/svg" aria-hidden="true" role="img" class="iconify iconify--emojione-monotone" preserveAspectRatio="xMidYMid meet" fill="#FFF" stroke="#FFF" color="#FFF">
             <G id="SVGRepo_bgCarrier" stroke-width="0"></G>
             <G id="SVGRepo_tracerCarrier" stroke-linecap="round" stroke-linejoin="round"></G>
             <G id="SVGRepo_iconCarrier">

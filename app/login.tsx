@@ -1,11 +1,16 @@
 import { AirplaneSvg, EmailSvg, LockerSvg } from "@/components/svg";
-import { StyleSheet, Text, TextInput, View } from "react-native"
+import { Link } from "expo-router";
+import { Pressable, StyleSheet, TextInput, View } from "react-native"
+import { useFonts } from 'expo-font';
 
 
 export default function Login () {
+    const [fontsLoaded] = useFonts({
+    'OpenSans': require('../assets/fonts/Open_Sans/OpenSans-VariableFont_wdth,wght.ttf')
+  });
     return (
         <View style={style.container}>
-            <AirplaneSvg/>
+            <AirplaneSvg style={style.logo}/>
 
             <View style={style.textFieldContainer}>
                 <View style={style.emialContainer}>
@@ -15,9 +20,13 @@ export default function Login () {
                 <View style={style.emialContainer}>
                     <LockerSvg/>
                     <TextInput placeholderTextColor="#fff" placeholder="Password" style={style.textField}></TextInput>
-                </View>
-                
+                </View> 
             </View>
+            <Link style={style.forgetPasswordLink} href="/">Forget Password?</Link>
+            <Pressable style={style.loginButton}>
+                Login
+            </Pressable>
+            <Link style={style.forgetPasswordLink} href="/">Do you have an account? Sing Up</Link>
         </View>
     );
 }
@@ -27,14 +36,16 @@ const style = StyleSheet.create({
         backgroundColor: "#0B655A",
         alignItems: "center",
         justifyContent: "center",
-        height: "100%",
-        gap: 130
+        height: "100%"
+    },
+    logo: {
+        paddingBottom: 130
     },
     textFieldContainer: {
         gap: 48
     },
     textField: {
-        // borderBottomWidth: 1,
+        fontFamily: "OpenSans",
         borderLeftWidth: 1,
         borderColor: "#fff",
         paddingHorizontal: 12,
@@ -50,5 +61,24 @@ const style = StyleSheet.create({
         borderColor: "#FFF",
         paddingHorizontal: 20,
         paddingVertical: 0
+    },
+    forgetPasswordLink: {
+        fontFamily: "OpenSans",
+        color: "#fff",
+        textAlign: "center",
+        width: "100%",
+        marginTop: 24
+    },
+    loginButton: {
+        fontFamily: "OpenSans",
+        backgroundColor: "#FF8A63",
+        color: "#FFF",
+        width: 310,
+        height: 60,
+        textAlign: "center",
+        alignItems: "center",
+        justifyContent: "center",
+        borderRadius: 20,
+        marginTop: 32
     }
 });
