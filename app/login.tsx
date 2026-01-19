@@ -26,7 +26,7 @@ export default function Login () {
             <Pressable style={style.loginButton}>
                 Login
             </Pressable>
-            <Link style={style.forgetPasswordLink} href="/">Do you have an account? Sing Up</Link>
+            <Link style={style.forgetPasswordLink} href="./registration">Do you have an account? Sing Up</Link>
         </View>
     );
 }
