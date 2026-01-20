@@ -3,6 +3,7 @@ import { AirplaneSvg } from "../components/svg";
 import { router } from "expo-router";
 
 
+
 export default function Index() {
   return (
     <View style={style.container}>
@@ -10,6 +11,10 @@ export default function Index() {
       <Button 
         title="Ir para segunda tela"
         onPress={() => router.replace('/login')}
+      />
+      <Button 
+        title="Go to ticket screen"
+        onPress={() => router.replace('/tickets')}
       />
     </View>
   );
