@@ -56,6 +56,7 @@ export const FlightDateCarousel = () => {
 
 const style = StyleSheet.create({
     calendarContainer: {
+        flex:1,
         gap: 12
     },
     selectedDate: {
