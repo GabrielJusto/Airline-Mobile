@@ -7,7 +7,8 @@ export const colors = {
     darkText: '#333',
     lightText: '#fff',
     background: '#f5f5f5',
-    gray: "#B2C7C5"
+    gray: "#B2C7C5",
+    orange: "#FF8A63"
 };
 
 export const getHeaderTextStyle = (color: string) => ({

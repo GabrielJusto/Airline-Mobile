@@ -1,6 +1,6 @@
 import { Flight } from "@/interfaces/Flight";
 import { StyleSheet, Text, View } from "react-native";
-import { AirplaneSvg } from "../svg";
+import { AirplaneSvg, FlightDurationSvg } from "../svg";
 import { WorkSans_400Regular } from "@expo-google-fonts/work-sans";
 import { colors } from "@/styles/global.styles";
 
@@ -14,7 +14,7 @@ export default function StoreFlight ({ flight }: { flight: Flight }) {
                     <Text style={style.airportCodeText}>
                         {flight.originAirportCode}
                     </Text>
-                    <Text>
+                    <Text style={style.infoText}>
                         {flight.originCity}
                     </Text>
                 </View>
@@ -23,14 +23,33 @@ export default function StoreFlight ({ flight }: { flight: Flight }) {
                     <Text  style={style.airportCodeText}>
                         {flight.detinationAirportCode}
                     </Text>
-                    <Text>
+                    <Text style={style.infoText}>
                         {flight.destinationCity}
                     </Text>
                 </View>
             </View>
             <View style={style.row}>
                 <View style={style.airport}>
-
+                    <Text style={style.infoTitleText}>
+                        Date
+                    </Text>
+                    <Text style={style.infoText}>
+                        {flight.date.toLocaleDateString("en-US", { day: "numeric", weekday: "short" }).toUpperCase()}
+                    </Text>
+                </View>
+                <View style={style.airport}>
+                    <FlightDurationSvg/>
+                    <Text style={style.flightDurationText}>
+                        {flight.flightDuration}
+                    </Text>
+                </View>
+                <View style={style.airport}>
+                    <Text style={style.infoTitleText}>
+                        Flight No
+                    </Text>
+                    <Text style={style.infoText}>
+                        {flight.flightNumber}
+                    </Text>
                 </View>
             </View>
         </View>
@@ -44,7 +63,8 @@ const style = StyleSheet.create({
         height: 205,
         width: "100%",
         paddingHorizontal:25,
-        paddingVertical:17
+        paddingVertical:17,
+        gap:35
     },
     row:{
         flexDirection: "row",
@@ -53,7 +73,10 @@ const style = StyleSheet.create({
         justifyContent: "center"
     },
     airport:{
-        alignItems:"center"
+        flex:1,
+        alignItems:"center",
+        justifyContent: "center",
+        textAlign: "center"
     },
     airplaneSvg:{
         height: 48,
@@ -67,6 +90,19 @@ const style = StyleSheet.create({
     cityText:{
         fontFamily: WorkSans_400Regular.toString(),
         fontSize: 12,
+    },
+
+    infoText: {
+        fontFamily: WorkSans_400Regular.toString(),
+        color: colors.gray
+    },
+    infoTitleText:{
+        fontFamily: WorkSans_400Regular.toString(),
+        color: colors.darkText
+    },
+    flightDurationText:{
+        fontFamily: WorkSans_400Regular.toString(),
+        color: colors.primary
     }
 
 })

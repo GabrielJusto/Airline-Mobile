@@ -23,7 +23,8 @@ export default function Tickets() {
             destinationCity: "Rio de Janeiro",
             date: new Date(2026, 0, 20, 8, 30),
             flightDuration: "1h 15m",
-            price: 450
+            price: 450,
+            flightNumber: "ABC123"
         },
         {
             id: 2,
@@ -33,7 +34,8 @@ export default function Tickets() {
             destinationCity: "Rio de Janeiro",
             date: new Date(2026, 0, 20, 12, 0),
             flightDuration: "1h 10m",
-            price: 520
+            price: 520,
+            flightNumber: "ABC124"
         },
         {
             id: 3,
@@ -43,7 +45,8 @@ export default function Tickets() {
             destinationCity: "Rio de Janeiro",
             date: new Date(2026, 0, 20, 16, 45),
             flightDuration: "1h 20m",
-            price: 380
+            price: 380,
+            flightNumber: "ABC125"
         },
         {
             id: 4,
@@ -53,7 +56,8 @@ export default function Tickets() {
             destinationCity: "Rio de Janeiro",
             date: new Date(2026, 0, 20, 19, 30),
             flightDuration: "1h 15m",
-            price: 610
+            price: 610,
+            flightNumber: "ABC126"
         }
     ];
 

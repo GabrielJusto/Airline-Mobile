@@ -6,5 +6,6 @@ export interface Flight {
     destinationCity: string,
     date: Date,
     flightDuration: string,
-    price: number
+    price: number,
+    flightNumber: string
 } 
