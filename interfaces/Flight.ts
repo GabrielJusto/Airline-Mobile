@@ -4,7 +4,8 @@ export interface Flight {
     originCity: string,
     detinationAirportCode: string,
     destinationCity: string,
-    date: Date,
+    departure: Date,
+    arrival: Date,
     flightDuration: string,
     price: number,
     flightNumber: string

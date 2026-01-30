@@ -30,7 +30,8 @@ export default function Tickets() {
                     flightDuration: f.flightDuration,
                     price: f.price,
                     flightNumber: f.flightNumber,
-                    date: new Date(f.date)}));
+                    departure: new Date(f.departure),
+                    arrival: new Date(f.arrival)}));
                 setTickets(normalized);
             });
     }, []);

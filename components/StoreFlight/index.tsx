@@ -33,10 +33,10 @@ export default function StoreFlight({ flight }: { flight: Flight }) {
             <View style={[style.row, style.timeRow]}>
                 <View style={style.airport}>
                     <Text style={style.infoTitleText}>
-                        Date
+                        Departure
                     </Text>
                     <Text style={style.infoText}>
-                        {flight.date.toLocaleDateString("en-US", { weekday: "short", day: "numeric" }).toUpperCase()} {flight.date.toLocaleTimeString("en-US", { hour: "2-digit", minute: "2-digit" })}
+                        {flight.departure.toLocaleDateString("en-US", { weekday: "short", day: "numeric" }).toUpperCase()} {flight.departure.toLocaleTimeString("en-US", { hour: "2-digit", minute: "2-digit" })}
                     </Text>
                 </View>
                 <View style={style.airport}>
@@ -46,7 +46,12 @@ export default function StoreFlight({ flight }: { flight: Flight }) {
                     </Text>
                 </View>
                 <View style={style.airport}>
-                    
+                    <Text style={style.infoTitleText}>
+                        Arrival
+                    </Text>
+                    <Text style={style.infoText}>
+                        {flight.arrival.toLocaleDateString("en-US", { weekday: "short", day: "numeric" }).toUpperCase()} {flight.arrival.toLocaleTimeString("en-US", { hour: "2-digit", minute: "2-digit" })}
+                    </Text>
                 </View>
             </View>
             <View style={style.row}>
