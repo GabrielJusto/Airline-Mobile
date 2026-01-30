@@ -36,7 +36,7 @@ export default function StoreFlight({ flight }: { flight: Flight }) {
                         Date
                     </Text>
                     <Text style={style.infoText}>
-                        {flight.date.toLocaleDateString("en-US", { day: "numeric", weekday: "short" }).toUpperCase()}
+                        {flight.date.toLocaleDateString("en-US", { weekday: "short", day: "numeric" }).toUpperCase()} {flight.date.toLocaleTimeString("en-US", { hour: "2-digit", minute: "2-digit" })}
                     </Text>
                 </View>
                 <View style={style.airport}>
@@ -46,12 +46,7 @@ export default function StoreFlight({ flight }: { flight: Flight }) {
                     </Text>
                 </View>
                 <View style={style.airport}>
-                    <Text style={style.infoTitleText}>
-                        Flight No
-                    </Text>
-                    <Text style={style.infoText}>
-                        {flight.flightNumber}
-                    </Text>
+                    
                 </View>
             </View>
             <View style={style.row}>
@@ -64,7 +59,12 @@ export default function StoreFlight({ flight }: { flight: Flight }) {
                     </Text>
                 </View>
                 <View style={style.airport}>
-
+                    <Text style={style.infoTitleText}>
+                        Flight Number
+                    </Text>
+                    <Text style={style.infoText}>
+                        {flight.flightNumber}
+                    </Text>
                 </View>
                 <View style={style.airport}>
                     <Pressable style={style.buyButton}>

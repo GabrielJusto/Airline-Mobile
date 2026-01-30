@@ -7,6 +7,7 @@ import SortByFlight from "@/components/SortByFlight";
 import { WorkSans_400Regular } from "@expo-google-fonts/work-sans";
 import { Flight } from "@/interfaces/Flight";
 import StoreFlight from "@/components/StoreFlight";
+import { useEffect, useState } from "react";
 
 
 
@@ -14,52 +15,25 @@ import StoreFlight from "@/components/StoreFlight";
 
 export default function Tickets() {
 
-    const flights: Flight[] = [
-        {
-            id: 1,
-            originAirportCode: "GRU",
-            originCity: "São Paulo",
-            detinationAirportCode: "GIG",
-            destinationCity: "Rio de Janeiro",
-            date: new Date(2026, 0, 20, 8, 30),
-            flightDuration: "1h 15m",
-            price: 450,
-            flightNumber: "ABC123"
-        },
-        {
-            id: 2,
-            originAirportCode: "GRU",
-            originCity: "São Paulo",
-            detinationAirportCode: "GIG",
-            destinationCity: "Rio de Janeiro",
-            date: new Date(2026, 0, 20, 12, 0),
-            flightDuration: "1h 10m",
-            price: 520,
-            flightNumber: "ABC124"
-        },
-        {
-            id: 3,
-            originAirportCode: "GRU",
-            originCity: "São Paulo",
-            detinationAirportCode: "GIG",
-            destinationCity: "Rio de Janeiro",
-            date: new Date(2026, 0, 20, 16, 45),
-            flightDuration: "1h 20m",
-            price: 380,
-            flightNumber: "ABC125"
-        },
-        {
-            id: 4,
-            originAirportCode: "GRU",
-            originCity: "São Paulo",
-            detinationAirportCode: "GIG",
-            destinationCity: "Rio de Janeiro",
-            date: new Date(2026, 0, 20, 19, 30),
-            flightDuration: "1h 15m",
-            price: 610,
-            flightNumber: "ABC126"
-        }
-    ];
+    const [flights, setTickets] = useState<Flight[]>([]);
+
+    useEffect(() => {
+        fetch("http://localhost:5054/seat/list-available-for-ticket")
+            .then(response => response.json())
+            .then((data: any[]) => {
+                const normalized = data.map((f: any): Flight => ({ 
+                    id: f.seatId,
+                    originAirportCode: f.fromIATACode,
+                    originCity: f.fromCity,
+                    detinationAirportCode: f.toIATACode,
+                    destinationCity: f.toCity,
+                    flightDuration: f.flightDuration,
+                    price: f.price,
+                    flightNumber: f.flightNumber,
+                    date: new Date(f.date)}));
+                setTickets(normalized);
+            });
+    }, []);
 
 
     return (
@@ -83,7 +57,7 @@ export default function Tickets() {
                 <ScrollView contentContainerStyle={style.flightsContainer}>
                     {flights.map(function (flight) {
                         return (
-                            <StoreFlight flight={flight} />
+                            <StoreFlight key={flight.id} flight={flight} />
                         );
                     })}
                 </ScrollView>
@@ -115,7 +89,7 @@ const style = StyleSheet.create({
         color: colors.lightText,
         fontFamily: WorkSans_400Regular.toString()
     },
-    flightsContainer:{
+    flightsContainer: {
         alignItems: 'center',
         gap: 32
     }

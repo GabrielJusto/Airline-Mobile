@@ -4,8 +4,8 @@ import Svg, { G, Path } from "react-native-svg";
 export const EmailSvg = () => {
     return (
         <Svg width="24" height="24" viewBox="0 0 24 24" fill="none" >
-            <Path d="M4 4H20C21.1 4 22 4.9 22 6V18C22 19.1 21.1 20 20 20H4C2.9 20 2 19.1 2 18V6C2 4.9 2.9 4 4 4Z" stroke="#F8F6E7" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" />
-            <Path d="M22 6L12 13L2 6" stroke="#F8F6E7" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" />
+            <Path d="M4 4H20C21.1 4 22 4.9 22 6V18C22 19.1 21.1 20 20 20H4C2.9 20 2 19.1 2 18V6C2 4.9 2.9 4 4 4Z" stroke="#F8F6E7" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" />
+            <Path d="M22 6L12 13L2 6" stroke="#F8F6E7" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" />
         </Svg>
     );
 }
@@ -13,11 +13,11 @@ export const EmailSvg = () => {
 export const LockerSvg = () => {
     return (
         <Svg width="24" height="24" viewBox="0 0 24 24" version="1.1" xmlns="http://www.w3.org/2000/svg" fill="#ffffff">
-            <G id="SVGRepo_bgCarrier" stroke-width="0" />
-            <G id="SVGRepo_tracerCarrier" stroke-linecap="round" stroke-linejoin="round" />
+            <G id="SVGRepo_bgCarrier" strokeWidth="0" />
+            <G id="SVGRepo_tracerCarrier" strokeLinecap="round" strokeLinejoin="round" />
             <G id="SVGRepo_iconCarrier">
-                <G id="Page-1" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
-                    <G id="ic-locker-closed" fill-rule="nonzero" fill="#FFF">
+                <G id="Page-1" stroke="none" strokeWidth="1" fill="none" fillRule="evenodd">
+                    <G id="ic-locker-closed" fillRule="nonzero" fill="#FFF">
                         <Path d="M4.8,10.9953976 L4.8,10.9953976 L4.8,19.0046024 C4.8,19.5443356 5.20329495,20 5.70078449,20 L18.2992155,20 C18.7998322,20 19.2,19.5543453 19.2,19.0046024 L19.2,10.9953976 C19.2,10.4556644 18.796705,10 18.2992155,10 L5.70078449,10 C5.20016778,10 4.8,10.4456547 4.8,10.9953976 L4.8,10.9953976 Z M3,10.9953976 C3,9.33850596 4.2083756,8 5.70078449,8 L18.2992155,8 C19.7882905,8 21,9.34828102 21,10.9953976 L21,19.0046024 C21,20.661494 19.7916244,22 18.2992155,22 L5.70078449,22 C4.2117095,22 3,20.651719 3,19.0046024 L3,10.9953976 Z M18,8 L16,8 C16,5.790861 14.209139,4 12,4 C9.790861,4 8,5.790861 8,8 L6,8 C6,4.6862915 8.6862915,2 12,2 C15.3137085,2 18,4.6862915 18,8 Z M12,16 C12.5522847,16 13,15.5522847 13,15 C13,14.4477153 12.5522847,14 12,14 C11.4477153,14 11,14.4477153 11,15 C11,15.5522847 11.4477153,16 12,16 Z" id="Rectangle-86"> </Path>
                     </G>
                 </G>
@@ -28,9 +28,9 @@ export const LockerSvg = () => {
 
 export const AirplaneSvg = ({ style = {}, fill = "#FFF" }) => {
     return (
-        <Svg style={style} width="89px" height="89px" viewBox="0 0 64 64" xmlns="http://www.w3.org/2000/svg" aria-hidden="true" role="img" class="iconify iconify--emojione-monotone" preserveAspectRatio="xMidYMid meet" fill={fill} stroke={fill} color={fill}>
-            <G id="SVGRepo_bgCarrier" stroke-width="0"></G>
-            <G id="SVGRepo_tracerCarrier" stroke-linecap="round" stroke-linejoin="round"></G>
+        <Svg style={style} width="89px" height="89px" viewBox="0 0 64 64" xmlns="http://www.w3.org/2000/svg" role="img" className="iconify iconify--emojione-monotone" preserveAspectRatio="xMidYMid meet" fill={fill} stroke={fill} color={fill}>
+            <G id="SVGRepo_bgCarrier" strokeWidth="0"></G>
+            <G id="SVGRepo_tracerCarrier" strokeLinecap="round" strokeLinejoin="round"></G>
             <G id="SVGRepo_iconCarrier">
                 <Path d="M61.22 4.387C60.286 2.869 58.659 2 56.754 2c-1.108 0-2.248.292-3.388.867c-3.855 1.948-8.762 5.468-13.911 9.919l-10.446-1.161l1.893-1.894l-1.909-1.91l-3.422 3.421l-10.891-1.209l2.27-2.27l-1.911-1.911l-3.797 3.799l-7.97-.886c-1.968-.219-1.588 4.727.7 5.794l22.869 10.66c-4.408 4.925-10.354 12.196-12.55 17.771L4.262 41.876c-.678-.074-.548 1.625.239 1.992c5.061 2.358 7.717 3.597 9.113 4.248c.032.105.075.205.116.305c-1.924 2.323-3.005 4.085-2.614 4.473c.386.385 2.138-.69 4.451-2.608c.104.044.212.087.328.124l4.236 9.091c.368.788 2.068.915 1.993.239l-1.109-10.001c4.861-1.944 11.521-6.907 17.784-12.543l10.639 22.83c1.068 2.293 6.016 2.669 5.797.699l-.886-7.971l3.797-3.796l-1.911-1.911l-2.268 2.269l-1.209-10.892l3.419-3.418l-1.911-1.912l-1.891 1.892l-1.16-10.441c4.453-5.149 7.973-10.056 9.919-13.911c1.125-2.233 1.156-4.51.086-6.247M59.421 9.77c-2.676 5.302-8.707 13.08-16.521 20.892c-8.438 8.44-16.827 14.79-22.108 17.087l-.232-2.098c3.957-4.042 6.65-7.701 6.076-8.283c-.582-.578-4.242 2.117-8.285 6.075l-2.111-.235c2.303-5.28 8.667-13.675 17.1-22.108c7.813-7.812 15.59-13.843 20.891-16.521c.904-.455 1.76-.661 2.524-.661c2.73-.001 4.293 2.625 2.666 5.852" fill={fill}></Path>
                 <Path d="M52.743 6.057l-3.295 2.047c1.505-.52 3.557.125 4.748 1.076l2.643-2.642c-1.09-.841-2.61-.981-4.096-.481" fill={fill}></Path>
@@ -54,7 +54,7 @@ export const FlightDurationSvg = ({ fill = colors.primary, ...props }) => {
     return (
         <Svg {...props} fill="none" xmlns="http://www.w3.org/2000/svg" >
             <Path d="M30.9216 14.6772C31.7412 14.2788 32.7586 14.2847 33.5847 14.5171C33.9948 14.6325 34.3274 14.7955 34.5456 14.9634C34.7813 15.1447 34.7995 15.2615 34.7995 15.2729C34.7997 15.2871 34.808 15.335 34.6892 15.4731C34.5502 15.6345 34.2777 15.8706 33.7497 16.2339C32.7 16.9561 30.7701 18.0949 27.2556 20.0591C24.1065 21.7878 19.8718 23.8435 18.2624 24.6011H18.2605C18.1469 24.6549 18.023 24.6734 17.9021 24.6558C17.781 24.6381 17.6637 24.5846 17.5652 24.4976L17.5642 24.4966L14.7819 22.0532L15.0466 21.9399C15.1859 21.8865 15.3377 21.8856 15.4773 21.938L15.486 21.9419L17.0944 22.478V22.4771C17.3264 22.5569 17.5728 22.5833 17.8161 22.5522C18.0614 22.5209 18.2953 22.4329 18.5017 22.2964L18.5036 22.2954C19.3024 21.7625 21.134 20.5794 23.196 19.2817L23.9763 18.7905L23.1394 18.4048L17.9694 16.0151L18.5505 15.8423L18.5534 15.8413C18.8804 15.7413 19.223 15.716 19.5593 15.7671H19.5622L26.8796 16.8403L27.0564 16.8657L27.2097 16.7739C28.7428 15.8531 30.0731 15.0767 30.9167 14.6802L30.9109 14.6558L30.9216 14.6772Z" fill={fill} stroke={fill} />
-            <Path d="M49 25C49 11.7452 38.2548 1 25 1C11.7452 1 1 11.7452 1 25" stroke={fill} stroke-linecap="round" stroke-dasharray="0.5 4" />
+            <Path d="M49 25C49 11.7452 38.2548 1 25 1C11.7452 1 1 11.7452 1 25" stroke={fill} strokeLinecap="round" strokeDasharray="0.5 4" />
         </Svg>
     )
 
