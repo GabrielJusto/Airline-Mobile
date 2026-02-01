@@ -15,13 +15,20 @@ import { useEffect, useState } from "react";
 
 export default function Tickets() {
 
-    const [flights, setTickets] = useState<Flight[]>([]);
+    const [flights, setFlights] = useState<Flight[]>([]);
 
     useEffect(() => {
-        fetch("http://localhost:5054/seat/list-available-for-ticket")
+        handleDateSelect(new Date());
+    }, []);
+
+    async function fetchFlights(params?: Record<string, string>) {
+        const baseUrl = "http://localhost:5054/seat/list-available-for-ticket";
+        const qs = params ? `?${new URLSearchParams(params).toString()}` : "";
+
+        await fetch(`${baseUrl}${qs}`)
             .then(response => response.json())
             .then((data: any[]) => {
-                const normalized = data.map((f: any): Flight => ({ 
+                const normalized = data.map((f: any): Flight => ({
                     id: f.seatId,
                     originAirportCode: f.fromIATACode,
                     originCity: f.fromCity,
@@ -31,11 +38,15 @@ export default function Tickets() {
                     price: f.price,
                     flightNumber: f.flightNumber,
                     departure: new Date(f.departure),
-                    arrival: new Date(f.arrival)}));
-                setTickets(normalized);
+                    arrival: new Date(f.arrival)
+                }));
+                setFlights(normalized);
             });
-    }, []);
+    }
 
+    function handleDateSelect(date: Date) {
+        fetchFlights({ departureDate: date.toISOString().slice(0, 10), fromIATACode: "GRU", toIATACode: "JFK" });
+    }
 
     return (
         <View style={style.container}>
@@ -48,7 +59,7 @@ export default function Tickets() {
                 </Text>
             </View>
             <View style={style.flightDateCarouselContainer}>
-                <FlightDateCarousel />
+                <FlightDateCarousel onDateSelect={handleDateSelect}/>
             </View>
             <View style={style.ticketsContainer}>
                 <SortByFlight />

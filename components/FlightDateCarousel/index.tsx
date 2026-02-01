@@ -3,6 +3,10 @@ import { WorkSans_400Regular } from "@expo-google-fonts/work-sans";
 import { useState } from "react";
 import { Pressable, ScrollView, StyleSheet, Text } from "react-native"
 
+interface Props {
+    onDateSelect: (date: Date) => void;
+}
+
 interface FlightDate {
     id: number,
     date: Date,
@@ -23,18 +27,24 @@ function initFlightDates(): FlightDate[] {
     return dates;
 }
 
-export const FlightDateCarousel = () => {
+
+export const FlightDateCarousel = ({ onDateSelect }: Props) => {
 
 
     const [datesState, setDatesState] = useState(initFlightDates());
 
     function setDate(dateId: number): void {
-        setDatesState(prevDates => prevDates.map(date => (
-            {
-                ...date,
-                selected: date.id === dateId
-            }
-        )));
+        setDatesState(prevDates => {
+            const newDates = prevDates.map(date => (
+                {
+                    ...date,
+                    selected: date.id === dateId
+
+                }));
+            const selected = newDates.find(d => d.selected);
+            if (selected && onDateSelect) onDateSelect(selected.date);
+            return newDates;
+        });
     }
     return (
         <ScrollView horizontal={true} contentContainerStyle={style.calendarContainer}>
@@ -56,7 +66,7 @@ export const FlightDateCarousel = () => {
 
 const style = StyleSheet.create({
     calendarContainer: {
-        flex:1,
+        flex: 1,
         gap: 12
     },
     selectedDate: {
