@@ -16,6 +16,10 @@ export default function Index() {
         title="Go to ticket screen"
         onPress={() => router.replace('/tickets')}
       />
+        <Button 
+        title="Go to ticket screen"
+        onPress={() => router.replace('/ticketFilter')}
+      />
     </View>
   );
 }
