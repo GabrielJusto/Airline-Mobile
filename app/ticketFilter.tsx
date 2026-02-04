@@ -1,6 +1,7 @@
 import { ImageBackground, Pressable, StyleSheet, Text, View } from "react-native";
 import { colors } from '../styles/global.styles';
 import { FlightDurationSvg } from "@/components/svg";
+import { LegsOption } from "@/components/LegsOption";
 import { useState } from "react";
 import DateTimePicker from '@react-native-community/datetimepicker';
 import { WorkSans_400Regular } from "@expo-google-fonts/work-sans";
@@ -35,16 +36,11 @@ export default function TicketFilter() {
                 style={style.headerContainer}
                 resizeMode="stretch"
             >
-                <Text style={style.headerText}>Book your</Text>
-                <Text style={style.headerText}>Flight</Text>
-                <View style={style.legsOptionContainer}>
-                    <Pressable>
-                        Round Trip
-                    </Pressable>
-                    <Pressable>
-                        One-Way
-                    </Pressable>
+                <View>
+                    <Text style={style.headerText}>Book your</Text>
+                    <Text style={style.headerText}>Flight</Text>
                 </View>
+                <LegsOption />
             </ImageBackground>
 
             <View style={style.filtersContainer}>
@@ -126,15 +122,14 @@ const style = StyleSheet.create({
         backgroundColor: colors.primary,
         paddingHorizontal: 32,
         paddingTop: 64,
+        paddingBottom: 16,
+        justifyContent: "space-between",
     },
     filtersContainer: {
         flex: 1,
         borderTopRightRadius: 40,
         borderTopLeftRadius: 40,
         backgroundColor: "#FFF"
-    },
-    legsOptionContainer: {
-
     },
     row: {
         flexDirection: "row"
@@ -148,7 +143,7 @@ const style = StyleSheet.create({
     luggage: {
 
     },
-    headerText:{
+    headerText: {
         fontSize: 36,
         fontFamily: WorkSans_400Regular.toString(),
         color: "#FFF"
