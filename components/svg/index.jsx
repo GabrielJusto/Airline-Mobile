@@ -52,7 +52,7 @@ export const LeftArrowSvg = ({ fill = "#F8F6E7" }) => {
 
 export const FlightDurationSvg = ({ fill = colors.primary, ...props }) => {
     return (
-        <Svg {...props} 
+        <Svg {...props}
             viewBox="0 0 50 26"
             width="100%"
             height="100%" fill="none" xmlns="http://www.w3.org/2000/svg" >
@@ -61,4 +61,14 @@ export const FlightDurationSvg = ({ fill = colors.primary, ...props }) => {
         </Svg>
     )
 
+}
+
+export const CalendarSvg = ({ fill = colors.gray }) => {
+    return (
+        <Svg width="18" height="20" viewBox="0 0 18 20" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <Path d="M3.99998 9H5.99998V11H3.99998V9ZM3.99998 13H5.99998V15H3.99998V13ZM7.99998 9H9.99998V11H7.99998V9ZM7.99998 13H9.99998V15H7.99998V13ZM12 9H14V11H12V9ZM12 13H14V15H12V13Z" fill={fill} />
+            <Path d="M2 20H16C17.103 20 18 19.103 18 18V4C18 2.897 17.103 2 16 2H14V0H12V2H6V0H4V2H2C0.897 2 0 2.897 0 4V18C0 19.103 0.897 20 2 20ZM16 6L16.001 18H2V6H16Z" fill={fill} />
+        </Svg>
+
+    );
 }

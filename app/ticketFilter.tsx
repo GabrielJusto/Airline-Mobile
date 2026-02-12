@@ -2,33 +2,13 @@ import { ImageBackground, Pressable, StyleSheet, Text, View } from "react-native
 import { colors } from '../styles/global.styles';
 import { LegsOption } from "@/components/LegsOption";
 import AirportsFilter from '@/components/AirportsFilter';
-import { useState } from "react";
-import DateTimePicker from '@react-native-community/datetimepicker';
+import { DateFilter } from '@/components/DateFilter';
 import { WorkSans_400Regular } from "@expo-google-fonts/work-sans";
 
 
 
 
 export default function TicketFilter() {
-    const [departureDate, setDepartureDate] = useState(new Date());
-    const [showDepartureDatePicker, setShowDepartureDatePicker] = useState(false);
-
-    const [returnDate, setReturnDate] = useState(new Date());
-    const [showReturnDatePicker, setShowReturnDatePicker] = useState(false);
-
-    const handleDepartureDateChange = (event: any, selectedDate: Date | undefined) => {
-        if (selectedDate) {
-            setDepartureDate(selectedDate);
-        }
-        setShowDepartureDatePicker(false);
-    };
-
-    const handleReturnDateChange = (event: any, selectedDate: Date | undefined) => {
-        if (selectedDate) {
-            setReturnDate(selectedDate);
-        }
-        setShowReturnDatePicker(false);
-    };
     return (
         <View style={style.container}>
             <ImageBackground
@@ -45,39 +25,7 @@ export default function TicketFilter() {
 
             <View style={style.filtersContainer}>
                 <AirportsFilter />
-                <View style={style.row}>
-                    <View style={style.date}>
-                        <Text>Departure</Text>
-                        <Pressable onPress={() => setShowDepartureDatePicker(true)}>
-                            <Text>{departureDate.toLocaleDateString('pt-BR')}</Text>
-                        </Pressable>
-                        {showDepartureDatePicker && (
-                            <DateTimePicker
-                                value={departureDate}
-                                mode="date"
-                                display="default"
-                                onChange={handleDepartureDateChange}
-                            />
-                        )}
-                    </View>
-                    <View>
-
-                    </View>
-                    <View style={style.date}>
-                        <Text>Return</Text>
-                        <Pressable onPress={() => setShowReturnDatePicker(true)}>
-                            <Text>{returnDate.toLocaleDateString('pt-BR')}</Text>
-                        </Pressable>
-                        {showReturnDatePicker && (
-                            <DateTimePicker
-                                value={returnDate}
-                                mode="date"
-                                display="default"
-                                onChange={handleReturnDateChange}
-                            />
-                        )}
-                    </View>
-                </View>
+                <DateFilter />
                 <View style={style.row}>
                     <View style={style.luggage}>
 
@@ -133,5 +81,5 @@ const style = StyleSheet.create({
         fontSize: 36,
         fontFamily: WorkSans_400Regular.toString(),
         color: "#FFF"
-    }
+    },
 })
