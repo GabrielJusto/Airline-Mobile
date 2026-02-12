@@ -1,7 +1,7 @@
 import { ImageBackground, Pressable, StyleSheet, Text, View } from "react-native";
 import { colors } from '../styles/global.styles';
-import { FlightDurationSvg } from "@/components/svg";
 import { LegsOption } from "@/components/LegsOption";
+import AirportsFilter from '@/components/AirportsFilter';
 import { useState } from "react";
 import DateTimePicker from '@react-native-community/datetimepicker';
 import { WorkSans_400Regular } from "@expo-google-fonts/work-sans";
@@ -44,21 +44,7 @@ export default function TicketFilter() {
             </ImageBackground>
 
             <View style={style.filtersContainer}>
-                <View style={style.row}>
-                    <View style={style.airportData}>
-                        <Text>From</Text>
-                        <Text>GRU</Text>
-                        <Text>São Paulo</Text>
-                    </View>
-                    <View>
-                        <FlightDurationSvg />
-                    </View>
-                    <View style={style.airportData}>
-                        <Text>To</Text>
-                        <Text>GRU</Text>
-                        <Text>São Paulo</Text>
-                    </View>
-                </View>
+                <AirportsFilter />
                 <View style={style.row}>
                     <View style={style.date}>
                         <Text>Departure</Text>
@@ -132,10 +118,10 @@ const style = StyleSheet.create({
         backgroundColor: "#FFF"
     },
     row: {
-        flexDirection: "row"
-    },
-    airportData: {
-
+        flexDirection: "row",
+        justifyContent: "space-between",
+        padding: 32,
+        gap: 60
     },
     date: {
 
