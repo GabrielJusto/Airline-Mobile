@@ -10,7 +10,7 @@ import { ticketsStyles as style } from "@/styles/tickets.styles";
 
 export default function Tickets() {
 
-    const { flights, selectDate } = useTickets();
+    const { flights, errorMessage, selectDate } = useTickets();
 
     return (
         <View style={style.container}>
@@ -28,7 +28,7 @@ export default function Tickets() {
             <View style={style.ticketsContainer}>
                 <SortByFlight />
                 <Text style={style.avalableFlightsText}>
-                    {flights.length} flights avalable.
+                    {errorMessage ?? `${flights.length} flights avalable.`}
                 </Text>
                 <ScrollView contentContainerStyle={style.flightsContainer}>
                     {flights.map(function (flight) {

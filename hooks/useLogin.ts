@@ -24,7 +24,7 @@ export function useLogin() {
 
         try {
             await authService.login({ email: email.trim(), password });
-            router.replace("/tickets");
+            router.replace("/ticketFilter");
         } catch (error) {
             setErrorMessage(getApiErrorMessage(error));
         } finally {

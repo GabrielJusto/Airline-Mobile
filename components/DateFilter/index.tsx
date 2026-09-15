@@ -5,8 +5,12 @@ import { WorkSans_400Regular } from "@expo-google-fonts/work-sans";
 import { CalendarSvg } from "@/components/svg";
 import { colors } from '@/styles/global.styles';
 
-export function DateFilter() {
-    const [departureDate, setDepartureDate] = useState(new Date());
+interface DateFilterProps {
+    departureDate: Date;
+    onDepartureDateChange: (date: Date) => void;
+}
+
+export function DateFilter({ departureDate, onDepartureDateChange }: DateFilterProps) {
     const [showDepartureDatePicker, setShowDepartureDatePicker] = useState(false);
 
     const [returnDate, setReturnDate] = useState(new Date());
@@ -14,7 +18,7 @@ export function DateFilter() {
 
     const handleDepartureDateChange = (event: any, selectedDate: Date | undefined) => {
         if (selectedDate) {
-            setDepartureDate(selectedDate);
+            onDepartureDateChange(selectedDate);
         }
         setShowDepartureDatePicker(false);
     };

@@ -1,14 +1,27 @@
-import { ImageBackground, Pressable, StyleSheet, Text, View } from "react-native";
-import { colors } from '../styles/global.styles';
+import { ActivityIndicator, ImageBackground, Pressable, Text, View } from "react-native";
 import { LegsOption } from "@/components/LegsOption";
 import AirportsFilter from '@/components/AirportsFilter';
 import { DateFilter } from '@/components/DateFilter';
-import { WorkSans_400Regular } from "@expo-google-fonts/work-sans";
-
-
+import { useTicketFilter } from "@/hooks/useTicketFilter";
+import { ticketFilterStyles as style } from "@/styles/ticketFilter.styles";
+import { colors } from "@/styles/global.styles";
 
 
 export default function TicketFilter() {
+
+    const {
+        airports,
+        isLoadingAirports,
+        fromIATACode,
+        setFromIATACode,
+        toIATACode,
+        setToIATACode,
+        departureDate,
+        setDepartureDate,
+        errorMessage,
+        search
+    } = useTicketFilter();
+
     return (
         <View style={style.container}>
             <ImageBackground
@@ -24,8 +37,23 @@ export default function TicketFilter() {
             </ImageBackground>
 
             <View style={style.filtersContainer}>
-                <AirportsFilter />
-                <DateFilter />
+                {isLoadingAirports ? (
+                    <View style={style.loadingContainer}>
+                        <ActivityIndicator color={colors.primary} />
+                    </View>
+                ) : (
+                    <AirportsFilter
+                        airports={airports}
+                        fromIATACode={fromIATACode}
+                        toIATACode={toIATACode}
+                        onChangeFrom={setFromIATACode}
+                        onChangeTo={setToIATACode}
+                    />
+                )}
+                <DateFilter
+                    departureDate={departureDate}
+                    onDepartureDateChange={setDepartureDate}
+                />
                 <View style={style.row}>
                     <View style={style.luggage}>
 
@@ -34,52 +62,15 @@ export default function TicketFilter() {
 
                     </View>
                 </View>
-                <View style={style.row}>
-
-                </View>
-                <View style={style.row}>
-                    <Pressable></Pressable>
+                {errorMessage ? (
+                    <Text style={style.errorMessage}>{errorMessage}</Text>
+                ) : null}
+                <View style={style.searchButtonContainer}>
+                    <Pressable style={style.searchButton} onPress={search}>
+                        <Text style={style.searchButtonText}>Search Flights</Text>
+                    </Pressable>
                 </View>
             </View>
         </View>
     );
 }
-
-const style = StyleSheet.create({
-    container: {
-        flex: 1,
-        backgroundColor: colors.primary
-    },
-    headerContainer: {
-        width: "100%",
-        height: 250,
-        backgroundColor: colors.primary,
-        paddingHorizontal: 32,
-        paddingTop: 64,
-        paddingBottom: 16,
-        justifyContent: "space-between",
-    },
-    filtersContainer: {
-        flex: 1,
-        borderTopRightRadius: 40,
-        borderTopLeftRadius: 40,
-        backgroundColor: "#FFF"
-    },
-    row: {
-        flexDirection: "row",
-        justifyContent: "space-between",
-        padding: 32,
-        gap: 60
-    },
-    date: {
-
-    },
-    luggage: {
-
-    },
-    headerText: {
-        fontSize: 36,
-        fontFamily: WorkSans_400Regular.toString(),
-        color: "#FFF"
-    },
-})
