@@ -8,6 +8,7 @@ import { WorkSans_400Regular } from "@expo-google-fonts/work-sans";
 import { Flight } from "@/interfaces/Flight";
 import StoreFlight from "@/components/StoreFlight";
 import { useEffect, useState } from "react";
+import { api } from "@/services/api";
 
 
 
@@ -22,11 +23,7 @@ export default function Tickets() {
     }, []);
 
     async function fetchFlights(params?: Record<string, string>) {
-        const baseUrl = "http://localhost:5054/seat/list-available-for-ticket";
-        const qs = params ? `?${new URLSearchParams(params).toString()}` : "";
-
-        await fetch(`${baseUrl}${qs}`)
-            .then(response => response.json())
+        await api.get<any[]>("/seat/list-available-for-ticket", { params })
             .then((data: any[]) => {
                 const normalized = data.map((f: any): Flight => ({
                     id: f.seatId,
