@@ -1,6 +1,6 @@
 import { StyleSheet, View } from "react-native";
 import { useState } from "react";
-import { DatePickerField } from "./DatePickerField";
+import { CalendarField } from "./CalendarField";
 
 interface DateFilterProps {
     departureDate: Date;
@@ -12,13 +12,13 @@ export function DateFilter({ departureDate, onDepartureDateChange }: DateFilterP
 
     return (
         <View style={styles.row}>
-            <DatePickerField
+            <CalendarField
                 label="DEPART"
                 value={departureDate}
                 onChange={onDepartureDateChange}
                 align="start"
             />
-            <DatePickerField
+            <CalendarField
                 label="RETURN"
                 value={returnDate}
                 onChange={setReturnDate}

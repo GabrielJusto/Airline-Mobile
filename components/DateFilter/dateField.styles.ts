@@ -2,7 +2,7 @@ import { StyleSheet } from "react-native";
 import { WorkSans_400Regular } from "@expo-google-fonts/work-sans";
 import { colors } from "@/styles/global.styles";
 
-export const datePickerFieldStyles = StyleSheet.create({
+export const dateFieldStyles = StyleSheet.create({
     dateContainer: {
         flex: 1,
     },
@@ -33,7 +33,7 @@ export const datePickerFieldStyles = StyleSheet.create({
     },
 });
 
-export interface DatePickerFieldProps {
+export interface DateFieldProps {
     label: string;
     value: Date;
     onChange: (date: Date) => void;
