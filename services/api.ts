@@ -115,4 +115,26 @@ export class ApiClient {
     }
 }
 
+export function getApiErrorMessage(error: unknown): string {
+    if (error instanceof ApiError) {
+        try {
+            const problem = JSON.parse(error.body);
+
+            if (problem && typeof problem.detail === "string" && problem.detail) {
+                return problem.detail;
+            }
+        } catch {
+            // The body was not a ProblemDetails payload, fall back to the generic messages below.
+        }
+
+        if (error.status === 401) {
+            return "Invalid email or password.";
+        }
+
+        return `Request failed with status ${error.status}.`;
+    }
+
+    return "Could not reach the server. Check your connection and try again.";
+}
+
 export const api = new ApiClient(process.env.EXPO_PUBLIC_API_URL ?? "");
