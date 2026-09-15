@@ -1,9 +1,11 @@
 import React, { useState } from 'react';
-import { Modal, Pressable, ScrollView, StyleSheet, Text, TextInput, View } from 'react-native';
+import { Modal, Pressable, ScrollView, StyleSheet, Text, TextInput, useWindowDimensions, View } from 'react-native';
 import { colors } from '../../styles/global.styles';
 import { FlightDurationSvg } from '@/components/svg';
 import { WorkSans_400Regular } from '@expo-google-fonts/work-sans';
 import { Airport } from '@/interfaces/Airport';
+
+const WIDE_SCREEN_BREAKPOINT = 768;
 
 type Side = 'from' | 'to';
 
@@ -24,6 +26,9 @@ export default function AirportsFilter({
 }: Props) {
   const [openSide, setOpenSide] = useState<Side | null>(null);
   const [cityQuery, setCityQuery] = useState('');
+
+  const { width } = useWindowDimensions();
+  const isWideScreen = width >= WIDE_SCREEN_BREAKPOINT;
 
   const selectedCode = openSide === 'to' ? toIATACode : fromIATACode;
 
@@ -84,12 +89,18 @@ export default function AirportsFilter({
       <Modal
         visible={openSide !== null}
         transparent={true}
-        animationType="slide"
+        animationType={isWideScreen ? 'fade' : 'slide'}
         onRequestClose={closePicker}
       >
-        <Pressable style={styles.backdrop} onPress={closePicker}>
-          <Pressable style={styles.sheet} onPress={() => {}}>
-            <View style={styles.sheetHandle} />
+        <Pressable
+          style={[styles.backdrop, isWideScreen && styles.centeredBackdrop]}
+          onPress={closePicker}
+        >
+          <Pressable
+            style={[styles.sheet, isWideScreen && styles.dialog]}
+            onPress={() => {}}
+          >
+            {isWideScreen ? null : <View style={styles.sheetHandle} />}
             <Text style={styles.sheetTitle}>
               {openSide === 'to' ? 'Destination airport' : 'Origin airport'}
             </Text>
@@ -186,6 +197,11 @@ const styles = StyleSheet.create({
     backgroundColor: 'rgba(11, 101, 90, 0.45)',
     justifyContent: 'flex-end'
   },
+  centeredBackdrop: {
+    justifyContent: 'center',
+    alignItems: 'center',
+    padding: 32
+  },
   sheet: {
     backgroundColor: '#FFF',
     borderTopLeftRadius: 40,
@@ -193,6 +209,13 @@ const styles = StyleSheet.create({
     paddingTop: 16,
     paddingBottom: 32,
     maxHeight: '70%'
+  },
+  dialog: {
+    width: '100%',
+    maxWidth: 480,
+    borderRadius: 24,
+    paddingTop: 24,
+    maxHeight: '80%'
   },
   sheetHandle: {
     alignSelf: 'center',
