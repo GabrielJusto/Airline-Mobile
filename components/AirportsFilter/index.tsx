@@ -1,13 +1,10 @@
-import React, { useState } from 'react';
-import { Modal, Pressable, ScrollView, StyleSheet, Text, TextInput, useWindowDimensions, View } from 'react-native';
+import React from 'react';
+import { Modal, Pressable, ScrollView, StyleSheet, Text, TextInput, View } from 'react-native';
 import { colors } from '../../styles/global.styles';
 import { FlightDurationSvg } from '@/components/svg';
 import { WorkSans_400Regular } from '@expo-google-fonts/work-sans';
 import { Airport } from '@/interfaces/Airport';
-
-const WIDE_SCREEN_BREAKPOINT = 768;
-
-type Side = 'from' | 'to';
+import { Side, useAirportPicker } from './useAirportPicker';
 
 type Props = {
   airports: Airport[];
@@ -24,43 +21,23 @@ export default function AirportsFilter({
   onChangeFrom,
   onChangeTo
 }: Props) {
-  const [openSide, setOpenSide] = useState<Side | null>(null);
-  const [cityQuery, setCityQuery] = useState('');
-
-  const { width } = useWindowDimensions();
-  const isWideScreen = width >= WIDE_SCREEN_BREAKPOINT;
-
-  const selectedCode = openSide === 'to' ? toIATACode : fromIATACode;
-
-  const visibleAirports = airports.filter(function (airport) {
-    return airport.city.toLowerCase().includes(cityQuery.trim().toLowerCase());
-  });
-
-  function openPicker(side: Side) {
-    setCityQuery('');
-    setOpenSide(side);
-  }
-
-  function closePicker() {
-    setCityQuery('');
-    setOpenSide(null);
-  }
-
-  function findAirport(iataCode: string | null): Airport | undefined {
-    return airports.find(function (airport) {
-      return airport.iataCode === iataCode;
-    });
-  }
-
-  function selectAirport(iataCode: string) {
-    if (openSide === 'to') {
-      onChangeTo(iataCode);
-    } else {
-      onChangeFrom(iataCode);
-    }
-
-    closePicker();
-  }
+  const {
+    openSide,
+    isWideScreen,
+    cityQuery,
+    changeQuery,
+    listRef,
+    visibleAirports,
+    selectedCode,
+    currentPage,
+    pageCount,
+    hasPagination,
+    goToPage,
+    openPicker,
+    closePicker,
+    selectAirport,
+    findAirport
+  } = useAirportPicker({ airports, fromIATACode, toIATACode, onChangeFrom, onChangeTo });
 
   function renderSide(side: Side, label: string, iataCode: string | null) {
     const airport = findAirport(iataCode);
@@ -109,11 +86,11 @@ export default function AirportsFilter({
               placeholder="Search by city"
               placeholderTextColor={colors.gray}
               value={cityQuery}
-              onChangeText={setCityQuery}
+              onChangeText={changeQuery}
               autoCapitalize="none"
               autoCorrect={false}
             />
-            <ScrollView contentContainerStyle={styles.sheetList}>
+            <ScrollView ref={listRef} contentContainerStyle={styles.sheetList}>
               {visibleAirports.length === 0 ? (
                 <Text style={styles.emptyMessage}>
                   No airports found for &quot;{cityQuery.trim()}&quot;.
@@ -143,6 +120,27 @@ export default function AirportsFilter({
                 );
               })}
             </ScrollView>
+            {hasPagination ? (
+              <View style={styles.pagination}>
+                <Pressable
+                  style={[styles.pageButton, currentPage === 0 && styles.pageButtonDisabled]}
+                  onPress={() => goToPage(currentPage - 1)}
+                  disabled={currentPage === 0}
+                >
+                  <Text style={styles.pageButtonText}>Previous</Text>
+                </Pressable>
+                <Text style={styles.pageIndicator}>
+                  {currentPage + 1} / {pageCount}
+                </Text>
+                <Pressable
+                  style={[styles.pageButton, currentPage === pageCount - 1 && styles.pageButtonDisabled]}
+                  onPress={() => goToPage(currentPage + 1)}
+                  disabled={currentPage === pageCount - 1}
+                >
+                  <Text style={styles.pageButtonText}>Next</Text>
+                </Pressable>
+              </View>
+            ) : null}
           </Pressable>
         </Pressable>
       </Modal>
@@ -244,6 +242,34 @@ const styles = StyleSheet.create({
     fontSize: 14,
     color: colors.darkText,
     outlineStyle: 'none' as any
+  },
+  pagination: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    justifyContent: 'space-between',
+    paddingHorizontal: 32,
+    paddingTop: 16
+  },
+  pageButton: {
+    borderWidth: 1,
+    borderColor: colors.primary,
+    borderRadius: 16,
+    paddingVertical: 10,
+    paddingHorizontal: 20
+  },
+  pageButtonDisabled: {
+    borderColor: colors.gray,
+    opacity: 0.5
+  },
+  pageButtonText: {
+    fontFamily: WorkSans_400Regular.toString(),
+    fontSize: 12,
+    color: colors.primary
+  },
+  pageIndicator: {
+    fontFamily: WorkSans_400Regular.toString(),
+    fontSize: 12,
+    color: colors.gray
   },
   emptyMessage: {
     fontFamily: WorkSans_400Regular.toString(),
