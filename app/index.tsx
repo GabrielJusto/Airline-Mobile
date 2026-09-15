@@ -1,6 +1,9 @@
 import { Redirect } from "expo-router";
+import { useAuth } from "@/contexts/AuthContext";
 
 
 export default function Index() {
-  return <Redirect href="/login" />;
+  const { isSignedIn } = useAuth();
+
+  return <Redirect href={isSignedIn ? "/ticketFilter" : "/login"} />;
 }

@@ -24,6 +24,7 @@ export class ApiClient {
     private readonly baseUrl: string;
     private readonly defaultHeaders: Record<string, string>;
     private authToken: string | null = null;
+    private onUnauthorized: (() => void) | null = null;
 
     constructor(baseUrl: string, defaultHeaders: Record<string, string> = {}) {
         if (!baseUrl) {
@@ -38,6 +39,15 @@ export class ApiClient {
 
     setAuthToken(token: string | null) {
         this.authToken = token;
+    }
+
+    /**
+     * Called when the server rejects a request that carried a token, meaning the
+     * session is no longer valid. Requests sent without a token, such as the login
+     * itself, never trigger it.
+     */
+    setUnauthorizedHandler(handler: (() => void) | null) {
+        this.onUnauthorized = handler;
     }
 
     buildUrl(path: string, params?: QueryParams): string {
@@ -102,6 +112,11 @@ export class ApiClient {
         });
 
         if (!response.ok) {
+            if (response.status === 401 && this.authToken) {
+                this.authToken = null;
+                this.onUnauthorized?.();
+            }
+
             throw new ApiError(response.status, url, await response.text().catch(() => ""));
         }
 

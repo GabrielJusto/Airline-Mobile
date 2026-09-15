@@ -1,9 +1,11 @@
 import { useState } from "react";
 import { router } from "expo-router";
 import { getApiErrorMessage } from "@/services/api";
-import { authService } from "@/services/auth";
+import { useAuth } from "@/contexts/AuthContext";
 
 export function useLogin() {
+    const { signIn } = useAuth();
+
     const [email, setEmail] = useState("");
     const [password, setPassword] = useState("");
     const [errorMessage, setErrorMessage] = useState<string | null>(null);
@@ -23,7 +25,7 @@ export function useLogin() {
         setIsSubmitting(true);
 
         try {
-            await authService.login({ email: email.trim(), password });
+            await signIn({ email: email.trim(), password });
             router.replace("/ticketFilter");
         } catch (error) {
             setErrorMessage(getApiErrorMessage(error));
