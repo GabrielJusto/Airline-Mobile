@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { Modal, Pressable, ScrollView, StyleSheet, Text, View } from 'react-native';
+import { Modal, Pressable, ScrollView, StyleSheet, Text, TextInput, View } from 'react-native';
 import { colors } from '../../styles/global.styles';
 import { FlightDurationSvg } from '@/components/svg';
 import { WorkSans_400Regular } from '@expo-google-fonts/work-sans';
@@ -23,8 +23,23 @@ export default function AirportsFilter({
   onChangeTo
 }: Props) {
   const [openSide, setOpenSide] = useState<Side | null>(null);
+  const [cityQuery, setCityQuery] = useState('');
 
   const selectedCode = openSide === 'to' ? toIATACode : fromIATACode;
+
+  const visibleAirports = airports.filter(function (airport) {
+    return airport.city.toLowerCase().includes(cityQuery.trim().toLowerCase());
+  });
+
+  function openPicker(side: Side) {
+    setCityQuery('');
+    setOpenSide(side);
+  }
+
+  function closePicker() {
+    setCityQuery('');
+    setOpenSide(null);
+  }
 
   function findAirport(iataCode: string | null): Airport | undefined {
     return airports.find(function (airport) {
@@ -39,7 +54,7 @@ export default function AirportsFilter({
       onChangeFrom(iataCode);
     }
 
-    setOpenSide(null);
+    closePicker();
   }
 
   function renderSide(side: Side, label: string, iataCode: string | null) {
@@ -48,7 +63,7 @@ export default function AirportsFilter({
     return (
       <Pressable
         style={[styles.airportData, side === 'from' ? styles.fromAirportData : styles.toAirportData]}
-        onPress={() => setOpenSide(side)}
+        onPress={() => openPicker(side)}
         disabled={airports.length === 0}
       >
         <Text style={styles.fromToText}>{label}</Text>
@@ -70,16 +85,30 @@ export default function AirportsFilter({
         visible={openSide !== null}
         transparent={true}
         animationType="slide"
-        onRequestClose={() => setOpenSide(null)}
+        onRequestClose={closePicker}
       >
-        <Pressable style={styles.backdrop} onPress={() => setOpenSide(null)}>
+        <Pressable style={styles.backdrop} onPress={closePicker}>
           <Pressable style={styles.sheet} onPress={() => {}}>
             <View style={styles.sheetHandle} />
             <Text style={styles.sheetTitle}>
               {openSide === 'to' ? 'Destination airport' : 'Origin airport'}
             </Text>
+            <TextInput
+              style={styles.searchField}
+              placeholder="Search by city"
+              placeholderTextColor={colors.gray}
+              value={cityQuery}
+              onChangeText={setCityQuery}
+              autoCapitalize="none"
+              autoCorrect={false}
+            />
             <ScrollView contentContainerStyle={styles.sheetList}>
-              {airports.map(function (airport) {
+              {visibleAirports.length === 0 ? (
+                <Text style={styles.emptyMessage}>
+                  No airports found for &quot;{cityQuery.trim()}&quot;.
+                </Text>
+              ) : null}
+              {visibleAirports.map(function (airport) {
                 const isSelected = airport.iataCode === selectedCode;
 
                 return (
@@ -177,6 +206,27 @@ const styles = StyleSheet.create({
     fontSize: 20,
     color: colors.primary,
     paddingHorizontal: 32,
+    paddingTop: 24,
+    paddingBottom: 16
+  },
+  searchField: {
+    marginHorizontal: 32,
+    marginBottom: 20,
+    borderWidth: 1,
+    borderColor: colors.gray,
+    borderRadius: 16,
+    paddingVertical: 14,
+    paddingHorizontal: 20,
+    fontFamily: WorkSans_400Regular.toString(),
+    fontSize: 14,
+    color: colors.darkText,
+    outlineStyle: 'none' as any
+  },
+  emptyMessage: {
+    fontFamily: WorkSans_400Regular.toString(),
+    fontSize: 14,
+    color: colors.gray,
+    textAlign: 'center',
     paddingVertical: 24
   },
   sheetList: {
