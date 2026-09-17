@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import { useLocalSearchParams } from "expo-router";
+import { router, useLocalSearchParams } from "expo-router";
 import { api, getApiErrorMessage } from "@/services/api";
 import { Flight } from "@/interfaces/Flight";
 
@@ -59,6 +59,14 @@ export function useTickets() {
         fetchFlights(date);
     }
 
+    function goBackToFilters() {
+        if (router.canGoBack()) {
+            router.back();
+        } else {
+            router.replace("/ticketFilter");
+        }
+    }
+
     useEffect(() => {
         selectDate(departureDate ? new Date(`${departureDate}T00:00:00`) : new Date());
     }, [fromIATACode, toIATACode, departureDate]);
@@ -66,6 +74,7 @@ export function useTickets() {
     return {
         flights,
         errorMessage,
-        selectDate
+        selectDate,
+        goBackToFilters
     };
 }

@@ -10,12 +10,12 @@ import { ticketsStyles as style } from "@/styles/tickets.styles";
 
 export default function Tickets() {
 
-    const { flights, errorMessage, selectDate } = useTickets();
+    const { flights, errorMessage, selectDate, goBackToFilters } = useTickets();
 
     return (
         <View style={style.container}>
             <View style={globalStyles.headerContainer}>
-                <Pressable>
+                <Pressable onPress={goBackToFilters}>
                     <LeftArrowSvg fill={colors.darkText} />
                 </Pressable>
                 <Text style={getHeaderTextStyle(colors.darkText)}>
