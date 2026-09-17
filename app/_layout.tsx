@@ -27,6 +27,7 @@ function RootNavigator() {
             <Stack.Protected guard={isSignedIn}>
                 <Stack.Screen name="ticketFilter" />
                 <Stack.Screen name="tickets" />
+                <Stack.Screen name="seats" />
             </Stack.Protected>
         </Stack>
     );

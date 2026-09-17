@@ -44,6 +44,7 @@ function isAborted(error: unknown): boolean {
 function normalizeFlight(data: any): Flight {
     return {
         id: data.seatId,
+        flightId: data.flightId,
         originAirportCode: data.fromIATACode,
         originCity: data.fromCity,
         detinationAirportCode: data.toIATACode,

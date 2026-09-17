@@ -1,4 +1,5 @@
 import { Flight } from "@/interfaces/Flight";
+import { router } from "expo-router";
 import { Pressable, StyleSheet, Text, useWindowDimensions, View } from "react-native";
 import { AirplaneSvg, FlightDurationSvg } from "../svg";
 import { WorkSans_400Regular } from "@expo-google-fonts/work-sans";
@@ -14,6 +15,19 @@ export default function StoreFlight({ flight }: { flight: Flight }) {
     // The 55px gap between columns is comfortable on a wide card and crushes the
     // text into three or four lines on a phone, so it shrinks with the screen.
     const rowGap = width < NARROW_SCREEN_BREAKPOINT ? 12 : 55;
+
+    function openSeatMap() {
+        router.push({
+            pathname: "/seats",
+            params: {
+                flightId: flight.flightId,
+                flightNumber: flight.flightNumber,
+                originAirportCode: flight.originAirportCode,
+                destinationAirportCode: flight.detinationAirportCode,
+                departure: flight.departure.toISOString()
+            }
+        });
+    }
 
     return (
         <View style={style.container}>
@@ -80,7 +94,7 @@ export default function StoreFlight({ flight }: { flight: Flight }) {
                     </Text>
                 </View>
                 <View style={style.airport}>
-                    <Pressable style={style.buyButton}>
+                    <Pressable style={style.buyButton} onPress={openSeatMap}>
                         <Text style={style.priceText}>
                             Buy
                         </Text>
