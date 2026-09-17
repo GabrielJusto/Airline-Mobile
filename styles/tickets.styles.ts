@@ -26,8 +26,12 @@ export const ticketsStyles = StyleSheet.create({
         alignSelf: 'center',
         gap: 32
     },
+    /**
+     * Fits the weekday, the day and the cheapest price, plus the horizontal
+     * scroll bar the browser lays over the row.
+     */
     flightDateCarouselContainer: {
-        height: 65
+        height: 100
     },
     avalableFlightsText: {
         color: colors.lightText,

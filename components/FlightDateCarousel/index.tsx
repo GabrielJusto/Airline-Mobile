@@ -1,64 +1,38 @@
 import { colors } from "@/styles/global.styles";
+import { toDayKey } from "@/hooks/useTickets";
 import { WorkSans_400Regular } from "@expo-google-fonts/work-sans";
-import { useState } from "react";
 import { Pressable, ScrollView, StyleSheet, Text, useWindowDimensions } from "react-native"
 
-const DATE_WIDTH = 55;
+const DATE_WIDTH = 74;
 const DATE_GAP = 12;
 const SIDE_PADDING = 32;
 
 interface Props {
+    dates: Date[];
+    selectedDate: Date;
     onDateSelect: (date: Date) => void;
+    cheapestPriceByDay?: Record<string, number>;
 }
 
-interface FlightDate {
-    id: number,
-    date: Date,
-    selected: boolean
+function formatPrice(price: number): string {
+    // Cents would not fit under a two digit day, and the cheapest fare only has
+    // to be comparable between days, not exact.
+    return `R$ ${Math.round(price).toLocaleString('pt-BR')}`;
 }
 
-function initFlightDates(): FlightDate[] {
-    const dates: FlightDate[] = [];
-    for (let i = -5; i < 10; i++) {
-        const date = new Date();
-        date.setDate(date.getDate() + i);
-        dates.push({
-            id: i + 5,
-            date: date,
-            selected: i === 0
-        });
-    }
-    return dates;
-}
-
-
-export const FlightDateCarousel = ({ onDateSelect }: Props) => {
-
-
-    const [datesState, setDatesState] = useState(initFlightDates());
+export const FlightDateCarousel = ({ dates, selectedDate, onDateSelect, cheapestPriceByDay = {} }: Props) => {
 
     const { width } = useWindowDimensions();
 
     // Centering a scrollable row makes the overflowing start unreachable in the
     // browser, so it only centers while every date fits on screen.
-    const contentWidth = datesState.length * DATE_WIDTH
-        + (datesState.length - 1) * DATE_GAP
+    const contentWidth = dates.length * DATE_WIDTH
+        + (dates.length - 1) * DATE_GAP
         + SIDE_PADDING * 2;
     const fitsOnScreen = width >= contentWidth;
 
-    function setDate(dateId: number): void {
-        setDatesState(prevDates => {
-            const newDates = prevDates.map(date => (
-                {
-                    ...date,
-                    selected: date.id === dateId
+    const selectedKey = toDayKey(selectedDate);
 
-                }));
-            const selected = newDates.find(d => d.selected);
-            if (selected && onDateSelect) onDateSelect(selected.date);
-            return newDates;
-        });
-    }
     return (
         <ScrollView
             horizontal={true}
@@ -67,14 +41,28 @@ export const FlightDateCarousel = ({ onDateSelect }: Props) => {
                 fitsOnScreen && style.centeredCalendarContainer
             ]}
         >
-            {datesState.map(function (flightDate: FlightDate) {
+            {dates.map(function (date: Date) {
+                const key = toDayKey(date);
+                const selected = key === selectedKey;
+                const price = cheapestPriceByDay[key];
+
                 return (
-                    <Pressable key={flightDate.id} onPress={() => setDate(flightDate.id)} style={[style.dateContainer, flightDate.selected ? style.selectedDate : null]}>
-                        <Text style={[style.weekDayText, flightDate.selected ? style.selectedWeekDayText : null]}>
-                            {flightDate.date.toLocaleDateString('en-US', { weekday: 'short' }).toUpperCase()}
+                    <Pressable
+                        key={key}
+                        onPress={() => onDateSelect(date)}
+                        style={[style.dateContainer, selected ? style.selectedDate : null]}
+                    >
+                        <Text style={[style.weekDayText, selected ? style.selectedWeekDayText : null]}>
+                            {date.toLocaleDateString('en-US', { weekday: 'short' }).toUpperCase()}
                         </Text>
-                        <Text style={[style.monthDayText, flightDate.selected ? style.selectedMonthDayText : null]}>
-                            {flightDate.date.getDate()}
+                        <Text style={[style.monthDayText, selected ? style.selectedMonthDayText : null]}>
+                            {date.getDate()}
+                        </Text>
+                        <Text
+                            style={[style.priceText, selected ? style.selectedPriceText : null]}
+                            numberOfLines={1}
+                        >
+                            {price !== undefined ? formatPrice(price) : '-'}
                         </Text>
                     </Pressable>
                 )
@@ -100,8 +88,8 @@ const style = StyleSheet.create({
         borderWidth: 1,
         borderColor: colors.gray,
         borderRadius: 14,
-        paddingHorizontal: 15,
-        paddingVertical: 10,
+        paddingHorizontal: 8,
+        paddingVertical: 8,
         alignItems: "center",
         justifyContent: "center",
         width: DATE_WIDTH
@@ -122,6 +110,15 @@ const style = StyleSheet.create({
         textAlign: "center"
     },
     selectedMonthDayText: {
+        color: colors.primary,
+    },
+    priceText: {
+        fontFamily: WorkSans_400Regular.toString(),
+        fontSize: 11,
+        color: colors.gray,
+        textAlign: "center"
+    },
+    selectedPriceText: {
         color: colors.primary,
     }
 });

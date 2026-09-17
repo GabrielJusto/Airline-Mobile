@@ -10,7 +10,7 @@ import { ticketsStyles as style } from "@/styles/tickets.styles";
 
 export default function Tickets() {
 
-    const { flights, errorMessage, selectDate, goBackToFilters } = useTickets();
+    const { flights, cheapestPriceByDay, dates, selectedDate, errorMessage, selectDate, goBackToFilters } = useTickets();
 
     return (
         <View style={style.container}>
@@ -23,7 +23,12 @@ export default function Tickets() {
                 </Text>
             </View>
             <View style={style.flightDateCarouselContainer}>
-                <FlightDateCarousel onDateSelect={selectDate}/>
+                <FlightDateCarousel
+                    dates={dates}
+                    selectedDate={selectedDate}
+                    onDateSelect={selectDate}
+                    cheapestPriceByDay={cheapestPriceByDay}
+                />
             </View>
             <View style={style.ticketsContainer}>
                 <View style={style.content}>
