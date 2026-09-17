@@ -1,5 +1,6 @@
 export interface Flight {
     id: number,
+    flightId: number,
     originAirportCode: string,
     originCity: string,
     detinationAirportCode: string,
