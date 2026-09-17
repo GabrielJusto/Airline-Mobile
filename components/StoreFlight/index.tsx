@@ -1,15 +1,23 @@
 import { Flight } from "@/interfaces/Flight";
-import { Pressable, StyleSheet, Text, View } from "react-native";
+import { Pressable, StyleSheet, Text, useWindowDimensions, View } from "react-native";
 import { AirplaneSvg, FlightDurationSvg } from "../svg";
 import { WorkSans_400Regular } from "@expo-google-fonts/work-sans";
 import { colors } from "@/styles/global.styles";
 
 
 
+const NARROW_SCREEN_BREAKPOINT = 600;
+
 export default function StoreFlight({ flight }: { flight: Flight }) {
+    const { width } = useWindowDimensions();
+
+    // The 55px gap between columns is comfortable on a wide card and crushes the
+    // text into three or four lines on a phone, so it shrinks with the screen.
+    const rowGap = width < NARROW_SCREEN_BREAKPOINT ? 12 : 55;
+
     return (
         <View style={style.container}>
-            <View style={style.row}>
+            <View style={[style.row, { gap: rowGap }]}>
                 <View style={style.airport}>
                     <Text style={style.airportCodeText}>
                         {flight.originAirportCode}
@@ -30,7 +38,7 @@ export default function StoreFlight({ flight }: { flight: Flight }) {
                     </Text>
                 </View>
             </View>
-            <View style={[style.row, style.timeRow]}>
+            <View style={[style.row, style.timeRow, { gap: rowGap }]}>
                 <View style={style.airport}>
                     <Text style={style.infoTitleText}>
                         Departure
@@ -54,7 +62,7 @@ export default function StoreFlight({ flight }: { flight: Flight }) {
                     </Text>
                 </View>
             </View>
-            <View style={style.row}>
+            <View style={[style.row, { gap: rowGap }]}>
                 <View style={style.airport}>
                     <Text style={style.priceDescription}>
                         Ticket Price:

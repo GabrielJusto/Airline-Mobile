@@ -15,6 +15,17 @@ export const ticketsStyles = StyleSheet.create({
         gap: 32,
         flex: 1
     },
+    /**
+     * Keeps the list from stretching edge to edge on a desktop window, where a
+     * card over a thousand pixels wide spreads its three columns too far apart.
+     */
+    content: {
+        flex: 1,
+        width: '100%',
+        maxWidth: 900,
+        alignSelf: 'center',
+        gap: 32
+    },
     flightDateCarouselContainer: {
         height: 65
     },

@@ -26,18 +26,22 @@ export default function Tickets() {
                 <FlightDateCarousel onDateSelect={selectDate}/>
             </View>
             <View style={style.ticketsContainer}>
-                <SortByFlight />
-                <Text style={style.avalableFlightsText}>
-                    {errorMessage ?? `${flights.length} flights avalable.`}
-                </Text>
-                <ScrollView contentContainerStyle={style.flightsContainer}>
-                    {flights.map(function (flight) {
-                        return (
-                            <StoreFlight key={flight.id} flight={flight} />
-                        );
-                    })}
-                </ScrollView>
-
+                <View style={style.content}>
+                    <SortByFlight />
+                    <Text style={style.avalableFlightsText}>
+                        {errorMessage ?? `${flights.length} flights avalable.`}
+                    </Text>
+                    <ScrollView
+                        contentContainerStyle={style.flightsContainer}
+                        showsVerticalScrollIndicator={false}
+                    >
+                        {flights.map(function (flight) {
+                            return (
+                                <StoreFlight key={flight.id} flight={flight} />
+                            );
+                        })}
+                    </ScrollView>
+                </View>
             </View>
 
         </View>

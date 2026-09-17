@@ -1,7 +1,11 @@
 import { colors } from "@/styles/global.styles";
 import { WorkSans_400Regular } from "@expo-google-fonts/work-sans";
 import { useState } from "react";
-import { Pressable, ScrollView, StyleSheet, Text } from "react-native"
+import { Pressable, ScrollView, StyleSheet, Text, useWindowDimensions } from "react-native"
+
+const DATE_WIDTH = 55;
+const DATE_GAP = 12;
+const SIDE_PADDING = 32;
 
 interface Props {
     onDateSelect: (date: Date) => void;
@@ -33,6 +37,15 @@ export const FlightDateCarousel = ({ onDateSelect }: Props) => {
 
     const [datesState, setDatesState] = useState(initFlightDates());
 
+    const { width } = useWindowDimensions();
+
+    // Centering a scrollable row makes the overflowing start unreachable in the
+    // browser, so it only centers while every date fits on screen.
+    const contentWidth = datesState.length * DATE_WIDTH
+        + (datesState.length - 1) * DATE_GAP
+        + SIDE_PADDING * 2;
+    const fitsOnScreen = width >= contentWidth;
+
     function setDate(dateId: number): void {
         setDatesState(prevDates => {
             const newDates = prevDates.map(date => (
@@ -47,7 +60,13 @@ export const FlightDateCarousel = ({ onDateSelect }: Props) => {
         });
     }
     return (
-        <ScrollView horizontal={true} contentContainerStyle={style.calendarContainer}>
+        <ScrollView
+            horizontal={true}
+            contentContainerStyle={[
+                style.calendarContainer,
+                fitsOnScreen && style.centeredCalendarContainer
+            ]}
+        >
             {datesState.map(function (flightDate: FlightDate) {
                 return (
                     <Pressable key={flightDate.id} onPress={() => setDate(flightDate.id)} style={[style.dateContainer, flightDate.selected ? style.selectedDate : null]}>
@@ -66,8 +85,12 @@ export const FlightDateCarousel = ({ onDateSelect }: Props) => {
 
 const style = StyleSheet.create({
     calendarContainer: {
-        flex: 1,
-        gap: 12
+        flexGrow: 1,
+        gap: DATE_GAP,
+        paddingHorizontal: SIDE_PADDING
+    },
+    centeredCalendarContainer: {
+        justifyContent: 'center'
     },
     selectedDate: {
         borderColor: colors.primary,
@@ -81,7 +104,7 @@ const style = StyleSheet.create({
         paddingVertical: 10,
         alignItems: "center",
         justifyContent: "center",
-        width: 55
+        width: DATE_WIDTH
     },
     weekDayText: {
         fontFamily: WorkSans_400Regular.toString(),
